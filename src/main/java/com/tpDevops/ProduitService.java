@@ -35,9 +35,8 @@ public class ProduitService {
     private boolean produitExiste(Long id) {
         return produits.stream().anyMatch(p -> p.getId().equals(id));
     }
-<<<<<<< HEAD
-}
-=======
+
+
     
  // Fonction pour lister tous les produits
     public List<Produit> listerProduits() {
@@ -72,6 +71,4 @@ public class ProduitService {
             System.out.println("Erreur : Le produit n'existe pas.");
         }
     }
-
 }
->>>>>>> 38ac2814907e980c53f46f732b1404c298a9188c
