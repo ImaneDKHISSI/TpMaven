@@ -43,6 +43,26 @@ public class ProduitService {
     public List<Produit> listerProduits() {
         return produits;
     }
+ // Fonction pour modifier un produit
+    public void modifierProduit(Produit produit) {
+        if (produitExiste(produit.getId())) {
+            // Validation des données
+            if (produit.getPrix() > 0 && produit.getQuantite() > 0) {
+                // Recherche du produit existant
+                Produit produitExist = produits.stream().filter(p -> p.getId().equals(produit.getId())).findFirst().orElse(null);
+                if (produitExist != null) {
+                    produitExist.setNom(produit.getNom());
+                    produitExist.setPrix(produit.getPrix());
+                    produitExist.setQuantite(produit.getQuantite());
+                    System.out.println("Produit modifié avec succès.");
+                }
+            } else {
+                System.out.println("Erreur : Le prix et la quantité doivent être positifs.");
+            }
+        } else {
+            System.out.println("Erreur : Le produit n'existe pas.");
+        }
+    }
 
 }
 >>>>>>> 38ac2814907e980c53f46f732b1404c298a9188c
