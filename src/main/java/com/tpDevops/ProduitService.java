@@ -35,4 +35,14 @@ public class ProduitService {
     private boolean produitExiste(Long id) {
         return produits.stream().anyMatch(p -> p.getId().equals(id));
     }
+<<<<<<< HEAD
 }
+=======
+    
+ // Fonction pour lister tous les produits
+    public List<Produit> listerProduits() {
+        return produits;
+    }
+
+}
+>>>>>>> 38ac2814907e980c53f46f732b1404c298a9188c
