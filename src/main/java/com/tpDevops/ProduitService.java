@@ -71,5 +71,9 @@ public class ProduitService {
             System.out.println("Erreur : Le produit n'existe pas.");
         }
     }
+<<<<<<< HEAD
 
 }
+=======
+}
+>>>>>>> 7943a22b86608380b5282ee31c57a77201b987ca
