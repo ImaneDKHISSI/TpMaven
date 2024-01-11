@@ -35,9 +35,8 @@ public class ProduitService {
     private boolean produitExiste(Long id) {
         return produits.stream().anyMatch(p -> p.getId().equals(id));
     }
-<<<<<<< HEAD
-}
-=======
+
+
     
  // Fonction pour lister tous les produits
     public List<Produit> listerProduits() {
@@ -46,7 +45,7 @@ public class ProduitService {
  // Fonction pour modifier un produit
     public void modifierProduit(Produit produit) {
         if (produitExiste(produit.getId())) {
-            // Validation des données
+            // Validation des donnï¿½es
             if (produit.getPrix() > 0 && produit.getQuantite() > 0) {
                 // Recherche du produit existant
                 Produit produitExist = produits.stream().filter(p -> p.getId().equals(produit.getId())).findFirst().orElse(null);
@@ -54,10 +53,10 @@ public class ProduitService {
                     produitExist.setNom(produit.getNom());
                     produitExist.setPrix(produit.getPrix());
                     produitExist.setQuantite(produit.getQuantite());
-                    System.out.println("Produit modifié avec succès.");
+                    System.out.println("Produit modifiï¿½ avec succï¿½s.");
                 }
             } else {
-                System.out.println("Erreur : Le prix et la quantité doivent être positifs.");
+                System.out.println("Erreur : Le prix et la quantitï¿½ doivent ï¿½tre positifs.");
             }
         } else {
             System.out.println("Erreur : Le produit n'existe pas.");
@@ -67,11 +66,10 @@ public class ProduitService {
     public void supprimerProduit(Long id) {
         if (produitExiste(id)) {
             produits.removeIf(p -> p.getId().equals(id));
-            System.out.println("Produit supprimé avec succès.");
+            System.out.println("Produit supprimï¿½ avec succï¿½s.");
         } else {
             System.out.println("Erreur : Le produit n'existe pas.");
         }
     }
 
 }
->>>>>>> 38ac2814907e980c53f46f732b1404c298a9188c
