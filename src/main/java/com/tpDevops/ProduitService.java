@@ -60,5 +60,14 @@ public class ProduitService {
             System.out.println("Erreur : Le produit n'existe pas.");
         }
     }
+ // Fonction pour supprimer un produit
+    public void supprimerProduit(Long id) {
+        if (produitExiste(id)) {
+            produits.removeIf(p -> p.getId().equals(id));
+            System.out.println("Produit supprimé avec succès.");
+        } else {
+            System.out.println("Erreur : Le produit n'existe pas.");
+        }
+    }
 
 }
