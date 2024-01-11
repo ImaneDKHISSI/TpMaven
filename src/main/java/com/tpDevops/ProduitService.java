@@ -5,75 +5,79 @@ import java.util.List;
 
 public class ProduitService {
 
-    private List<Produit> produits;
+	private List<Produit> produits = new ArrayList<>();
 
-    public ProduitService() {
-        this.produits = new ArrayList<>();
-    }
+	public boolean produitExiste(Long id, String nom) {
+	    for (Produit p : produits) {
+	        if (p.getId().equals(id) || p.getNom().equals(nom)) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+	
+	public boolean ValidationProduit(double prix, int quantite) {
+	    return prix >= 0 && quantite >= 0;
+	}
 
-    // Fonction pour ajouter un produit
-    public void ajouterProduit(Produit produit) {
-        // Vérification de l'unicité du produit
-        if (!produitExiste(produit.getId(), produit.getNom())) {
-            // Validation des données
-            if (produit.getPrix() > 0 && produit.getQuantite() > 0) {
-                produits.add(produit);
-                System.out.println("Produit ajouté avec succès.");
-            } else {
-                System.out.println("Erreur : Le prix et la quantité doivent être positifs.");
-            }
-        } else {
-            System.out.println("Erreur : Un produit avec le même ID ou nom existe déjà.");
-        }
-    }
-      // Fonction pour vérifier si un produit existe déjà
-    private boolean produitExiste(Long id, String nom) {
-        return produits.stream().anyMatch(p -> p.getId().equals(id) || p.getNom().equals(nom));
-    }
+    public void createProduit(Produit produit) {
+      
+    	    if (!produitExiste(produit.getId(), produit.getNom())) {
+    	        if (ValidationProduit(produit.getPrix(), produit.getQuantite())) {
+    	            produits.add(produit);
+    	        } else {
+    	            // Gestion d'exception : Valeurs invalides
+    	        	
+    	            throw new IllegalArgumentException("Le prix et la quantité doivent être positifs.");
+    	        }
+    	    } else {
+    	        // Gestion d'exception : Produit déjà existant
+    	    	
+    	        throw new IllegalArgumentException("Un produit avec le même ID ou nom existe déjà.");
+    	    }
+    		}
+   public Produit readProduit(Long id) {
+	        for (Produit p : produits) {
+	            if (p.getId().equals(id)) {
+	                return p;
+	            }
+	        }
+	        return null;
+	    }
+   public void updateProduit(Produit updatedProduit) {
+	    for (Produit existingProd : produits) {
+	        if (existingProd.getId().equals(updatedProduit.getId())) {
+	            for (Produit p : produits) {
+	                if (!existingProd.equals(p) && p.getNom().equals(updatedProduit.getNom())) {
+	                    throw new IllegalArgumentException("Un produit avec le même nom existe déjà.");
+	                }
+	            }
 
-    // Fonction pour vérifier si un produit existe déjà (utilisée pour la modification et la suppression)
-    private boolean produitExiste(Long id) {
-        return produits.stream().anyMatch(p -> p.getId().equals(id));
-    }
+	            existingProd.setNom(updatedProduit.getNom());
+	            existingProd.setPrix(updatedProduit.getPrix());
+	            existingProd.setQuantite(updatedProduit.getQuantite());
+
+	            return;
+	        }
+	    }
+	    throw new IllegalArgumentException("Produit non trouvé pour la mise à jour.");
+	}
+
+   public void deleteProduit(Long id) {
+	    Produit produitToRemove = null;
+
+	    for (int i = 0; i < produits.size(); i++) {
+	        Produit p = produits.get(i);
+	        if (p.getId().equals(id)) {
+	            produitToRemove = p;
+	            produits.remove(i);
+	            return; // Arrêter la méthode après avoir supprimé l'élément
+	        }
+	    }
+	}
 
 
-    
- // Fonction pour lister tous les produits
-    public List<Produit> listerProduits() {
-        return produits;
-    }
- // Fonction pour modifier un produit
-    public void modifierProduit(Produit produit) {
-        if (produitExiste(produit.getId())) {
-            // Validation des donn�es
-            if (produit.getPrix() > 0 && produit.getQuantite() > 0) {
-                // Recherche du produit existant
-                Produit produitExist = produits.stream().filter(p -> p.getId().equals(produit.getId())).findFirst().orElse(null);
-                if (produitExist != null) {
-                    produitExist.setNom(produit.getNom());
-                    produitExist.setPrix(produit.getPrix());
-                    produitExist.setQuantite(produit.getQuantite());
-                    System.out.println("Produit modifi� avec succ�s.");
-                }
-            } else {
-                System.out.println("Erreur : Le prix et la quantit� doivent �tre positifs.");
-            }
-        } else {
-            System.out.println("Erreur : Le produit n'existe pas.");
-        }
-    }
- // Fonction pour supprimer un produit
-    public void supprimerProduit(Long id) {
-        if (produitExiste(id)) {
-            produits.removeIf(p -> p.getId().equals(id));
-            System.out.println("Produit supprim� avec succ�s.");
-        } else {
-            System.out.println("Erreur : Le produit n'existe pas.");
-        }
-    }
-<<<<<<< HEAD
+
 
 }
-=======
-}
->>>>>>> 7943a22b86608380b5282ee31c57a77201b987ca
+
